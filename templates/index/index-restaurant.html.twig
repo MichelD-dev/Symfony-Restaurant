@@ -1,0 +1,45 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Symfony RestaurantS{% endblock %}
+
+{% block body %}
+  <!-- Image header -->
+  <div class="w3-display-container w3-container">
+    <img src="{{ asset('assets/img/imgheader.jpg') }}" alt="Jeans" style="width:100%">
+    <div class="w3-display-topleft w3-text-white" style="padding:24px 48px">
+      <h1 class="w3-jumbo w3-hide-small">New arrivals</h1>
+      <h1 class="w3-hide-large w3-hide-medium">New arrivals</h1>
+      <h1 class="w3-hide-small">COLLECTION 2016</h1>
+      <p><a href="#jeans" class="w3-button w3-black w3-padding-large w3-large">SHOP NOW</a></p>
+    </div>
+  </div>
+  
+  <div class="w3-container w3-text-grey" style="max-width:800px; margin:auto; margin-bottom: 50px;">
+      <h1 class="w3-wide">RESTAURANT: {{ restaurant.name }}</h1>
+  
+
+  <!-- Product grid -->
+    <ul class="w3-ul w3-border-white w3-white">
+      {% for plat in restaurant.plats %}
+          <li class="w3-padding">
+              <p>
+                {{ plat.name }} -- Prix: <b>{{ plat.price }}</b>€
+                <a href="{{ path('reservation_remove', {'platId' : plat.id}) }}">
+                    <button class="w3-button w3-gray" style="float:right;">Retirer</button>
+                </a>
+                <a href="{{ path('reservation_add', {'platId' : plat.id}) }}">
+                    <button class="w3-button w3-blue-gray" style="float:right;">Ajouter</button>
+                </a>
+                <span style="float:right; margin-right: 10px">Quantité: ???</span>
+              </p>
+          </li>
+      {% endfor %}
+    </ul>
+    {% if (is_granted('ROLE_USER')) and commande %}
+        <p style="color: black;">Prix Total: <b>{{ commande.totalPrice }}</b>€</p>
+        <a href="{{ path('commande_validate', {'restaurantId' : restaurant.id}) }}">
+            <button class="w3-button w3-green" style="float:left; margin-top: 5px;">Valider la Commande</button>
+        </a>
+    {% endif %}
+  </div>
+{% endblock %}

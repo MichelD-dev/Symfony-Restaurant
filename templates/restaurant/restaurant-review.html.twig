@@ -1,0 +1,33 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Tableau de bord -- Restaurants{% endblock %}
+
+{% block body %}
+  <div class="w3-container w3-content w3-padding-64" style="max-width:800px" id="dashboard">
+    <div class="w3-center">
+      <h1 class="w3-wide">RESTAURANT {{ restaurant.name }}</h1>
+
+      <a href="{{ path('plat_create', {'restaurantId' : restaurant.id}) }}">
+        <button class="w3-button w3-black w3-margin-bottom">Créer un plat</button>
+      </a>
+    </div>
+    
+    <h3 class="w3-wide w3-center">Liste des Plats</h3>
+    
+    <ul class="w3-ul w3-border-white w3-white">
+      {% for plat in restaurant.plats %}
+          <li class="w3-padding">
+              <p>
+                {{ plat.name }}
+                <a href="{{ path('plat_delete', {'platId' : plat.id}) }}">
+                <button class="w3-button w3-red" style="float:right;">Supprimer</button>
+                </a>
+                <a href="{{ path('plat_update', {'platId' : plat.id}) }}">
+                <button class="w3-button w3-blue-gray" style="float:right;">Modifier</button>
+                </a>
+              </p>
+          </li>
+      {% endfor %}
+    </ul>
+  </div>
+{% endblock %}
